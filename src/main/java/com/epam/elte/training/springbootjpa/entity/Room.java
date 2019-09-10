@@ -1,5 +1,6 @@
 package com.epam.elte.training.springbootjpa.entity;
 
+import java.util.List;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,11 +19,13 @@ public abstract class Room {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
     private long roomNumber;
 
     @OneToMany
     @JoinColumn(name = "guestId")
-    private Guest guest;
+    private List<Guest> guestList;
 
     @ManyToOne
     @JoinColumn(name = "hotelName")
@@ -36,12 +39,20 @@ public abstract class Room {
         this.roomNumber = roomNumber;
     }
 
-    public Guest getGuest() {
-        return guest;
+    public List<Guest> getGuestList() {
+        return guestList;
     }
 
-    public void setGuest(Guest guest) {
-        this.guest = guest;
+    public void setGuestList(List<Guest> guestList) {
+        this.guestList = guestList;
+    }
+
+    public void addGuest(Guest guest) {
+        guestList.add(guest);
+    }
+
+    public void removeGuest(Guest guest) {
+        guestList.remove(guest);
     }
 
     public Hotel getHotel() {
