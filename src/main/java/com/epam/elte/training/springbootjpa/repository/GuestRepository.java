@@ -17,5 +17,5 @@ public interface GuestRepository extends CrudRepository<Guest, Long> {
     Guest findByGuestId(long id);
 
     @Query("SELECT g FROM Guest g INNER JOIN g.room r WHERE r.hotel.hotelName = :hotelName")
-    Guest findGuestByHotelName(String hotelName);
+    List<Guest> findGuestByHotelName(String hotelName);
 }
