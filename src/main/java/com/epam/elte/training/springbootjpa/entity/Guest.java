@@ -5,7 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Guest {
@@ -17,7 +17,7 @@ public class Guest {
     private String firstName;
     private String lastName;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "roomNumber")
     private Room room;
 
@@ -31,10 +31,6 @@ public class Guest {
 
     public Long getGuestId() {
         return guestId;
-    }
-
-    public void setGuestId(Long guestId) {
-        this.guestId = guestId;
     }
 
     public String getFirstName() {
@@ -61,11 +57,12 @@ public class Guest {
         this.room = room;
     }
 
-    @Override public String toString() {
-        return "Guest{" +
-            "guestId=" + guestId +
-            ", firstName='" + firstName + '\'' +
-            ", lastName='" + lastName + '\'' +
-            '}';
+    @Override
+    public String toString() {
+        return "Guest{"
+            + "guestId=" + guestId
+            + ", firstName='" + firstName + '\''
+            + ", lastName='" + lastName + '\''
+            + '}';
     }
 }

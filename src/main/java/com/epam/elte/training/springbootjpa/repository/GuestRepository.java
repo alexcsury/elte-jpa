@@ -2,6 +2,7 @@ package com.epam.elte.training.springbootjpa.repository;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,4 +15,7 @@ public interface GuestRepository extends CrudRepository<Guest, Long> {
     List<Guest> findByLastName(String lastName);
 
     Guest findByGuestId(long id);
+
+    @Query("SELECT g FROM Guest g INNER JOIN g.room r WHERE r.hotel.hotelName = :hotelName")
+    Guest findGuestByHotelName(String hotelName);
 }
