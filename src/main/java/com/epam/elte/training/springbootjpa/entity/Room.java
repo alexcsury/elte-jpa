@@ -25,7 +25,7 @@ public abstract class Room {
 
     private long roomNumber;
 
-    @OneToMany(mappedBy = "room", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "room")
     private List<Guest> guestList = new ArrayList<>();
 
     @ManyToOne

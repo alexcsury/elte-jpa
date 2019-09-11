@@ -27,8 +27,12 @@ public class HotelService {
         return hotelRepository.findAll();
     }
 
+    @Transactional
     public Hotel getCurrentHotel() {
-        return currentHotel;
+        if(currentHotel != null) {
+            return hotelRepository.findById(currentHotel.getId()).get();
+        }
+        return null;
     }
 
     @Transactional

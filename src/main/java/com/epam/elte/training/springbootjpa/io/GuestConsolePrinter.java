@@ -45,7 +45,8 @@ public class GuestConsolePrinter extends ConsolePrinter{
         System.out.println("Room number:");
         String roomNumberLine = scanner.nextLine();
         long roomNumber = Long.parseLong(roomNumberLine);
-        guestService.findGuestsByRoomNumber(roomNumber).forEach(System.out::println);
+        final List<Guest> guestsByRoomNumber = guestService.findGuestsByRoomNumber(roomNumber);
+        guestsByRoomNumber.forEach(System.out::println);
     }
 
     private void listGuests() {

@@ -4,6 +4,7 @@ import com.epam.elte.training.springbootjpa.entity.Guest;
 import com.epam.elte.training.springbootjpa.entity.Room;
 import com.epam.elte.training.springbootjpa.repository.GuestRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +19,15 @@ public class GuestService {
     @Autowired
     private HotelService hotelService;
 
+    @Autowired
+    private RoomService roomService;
+
     @Transactional
     public void createNewGuest(String firstName, String lastName, long roomNumber) {
         Guest guest = new Guest();
         guest.setFirstName(firstName);
         guest.setLastName(lastName);
-        Room room = getRoomInCurrentHotel(roomNumber);
+        Room room = roomService.getRoomInCurrentHotel(roomNumber);
         guest.setRoom(room);
         room.getGuestList().add(guest);
         guestRepository.save(guest);
@@ -35,17 +39,10 @@ public class GuestService {
         return guestRepository.findByHotelName(hotelName);
     }
 
+    @Transactional
     public List<Guest> findGuestsByRoomNumber(long roomNumber) {
-        Room room = getRoomInCurrentHotel(roomNumber);
-        return room.getGuestList();
-    }
-
-    private Room getRoomInCurrentHotel(long roomNumber) {
-        return hotelService.getCurrentHotel()
-            .getListOfRooms().stream()
-            .filter(r -> r.getRoomNumber() == roomNumber)
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("There is no room with that room number!"));
+        Room room = roomService.getRoomInCurrentHotel(roomNumber);
+        return new ArrayList<>(room.getGuestList());
     }
 
     @Transactional

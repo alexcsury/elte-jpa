@@ -8,6 +8,7 @@ import com.epam.elte.training.springbootjpa.repository.RoomRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -39,10 +40,18 @@ public class RoomService {
             default:
                 throw new IllegalArgumentException("No such room exists with type " + roomTpye);
         }
-
     }
 
     public boolean noCurrentHotel() {
         return hotelService.getCurrentHotel() == null;
+    }
+
+    @Transactional
+    public Room getRoomInCurrentHotel(long roomNumber) {
+        Room room = roomRepository.findByRoomNumber(roomNumber).orElse(null);
+        if(room != null && room.getHotel().equals(hotelService.getCurrentHotel())) {
+            return room;
+        }
+        throw new IllegalArgumentException("No Room " + roomNumber + " in the current hotel!");
     }
 }

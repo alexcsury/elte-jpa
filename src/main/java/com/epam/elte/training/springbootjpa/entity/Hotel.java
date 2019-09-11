@@ -19,7 +19,7 @@ public class Hotel {
 
     private String hotelName;
 
-    @OneToMany(mappedBy = "hotel", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "hotel")
     private List<Room> listOfRooms = new ArrayList<>();
 
     public long getId() {
