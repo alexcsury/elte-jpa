@@ -1,8 +1,10 @@
 package com.epam.elte.training.springbootjpa.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,7 +16,7 @@ import javax.persistence.OneToMany;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn
+@DiscriminatorColumn(name = "room_type")
 public abstract class Room {
 
     @Id
@@ -23,9 +25,8 @@ public abstract class Room {
 
     private long roomNumber;
 
-    @OneToMany
-    @JoinColumn(name = "guestId")
-    private List<Guest> guestList;
+    @OneToMany(mappedBy = "room", fetch = FetchType.EAGER)
+    private List<Guest> guestList = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "hotelName")
