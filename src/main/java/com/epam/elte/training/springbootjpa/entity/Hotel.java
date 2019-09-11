@@ -19,12 +19,7 @@ public class Hotel {
     private String hotelName;
 
     @OneToMany(mappedBy = "hotel")
-    private List<Room> listOfRooms;
-
-    public Hotel(String hotelName) {
-        this.hotelName = hotelName;
-        this.listOfRooms = new ArrayList<>();
-    }
+    private List<Room> listOfRooms = new ArrayList<>();
 
     public long getId() {
         return id;

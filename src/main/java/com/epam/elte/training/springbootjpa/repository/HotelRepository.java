@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 import com.epam.elte.training.springbootjpa.entity.Hotel;
 
 @Repository
-public interface HotelRepository extends CrudRepository<Hotel, String> {
+public interface HotelRepository extends CrudRepository<Hotel, Long> {
 }

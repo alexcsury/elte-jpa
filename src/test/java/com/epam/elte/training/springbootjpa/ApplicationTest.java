@@ -36,24 +36,24 @@ public class ApplicationTest {
     public void testCrudRepository() {
         Guest guest = new Guest("Aaaa", "Bbbb");
         guestRepository.save(guest);
-        Guest searchedGuest = guestRepository.findByGuestId(guest.getGuestId());
+        Guest searchedGuest = guestRepository.findById(guest.getGuestId()).orElseThrow(() -> new RuntimeException("Guest not found in test!"));
         assertEquals(guest.getFirstName(), searchedGuest.getFirstName());
         assertEquals(guest.getLastName(), searchedGuest.getLastName());
         assertEquals(guest.getGuestId(), searchedGuest.getGuestId());
 
         searchedGuest.setFirstName("Zzzz");
         guestRepository.save(searchedGuest);
-        Guest updatedGuest = guestRepository.findByGuestId(searchedGuest.getGuestId());
+        Guest updatedGuest = guestRepository.findById(searchedGuest.getGuestId()).orElseThrow(() -> new RuntimeException("Guest not found in test!"));
         assertEquals(searchedGuest.getFirstName(), updatedGuest.getFirstName());
 
         guestRepository.delete(updatedGuest);
-        assertNull(guestRepository.findByGuestId(updatedGuest.getGuestId()));
+        assertNull(guestRepository.findById(updatedGuest.getGuestId()).orElse(null));
     }
 
     @Test
     public void testFindAll() {
         List<Guest> listOfGuests = new ArrayList<>();
-        guestRepository.findAll().forEach(guest -> listOfGuests.add(guest));
+        guestRepository.findAll().forEach(listOfGuests::add);
         assertEquals(4, listOfGuests.size());
     }
 
